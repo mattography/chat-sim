@@ -5,25 +5,25 @@ chatApp.controller("chatController",function($scope, $timeout, $firebaseArray){
     $scope.userSelected = false;
     $scope.users = $firebaseArray(myUsers);
     $scope.messages = [{
-        user:"aleksandra",
+        name:"aleksandra",
         message:"how are you?",
         response:"a response from aleksandra",
         showDetails: false
       },
       {
-        user:"evan",
+        name:"evan",
         message:"how are you?",
         response:"a response from evan",
         showDetails: false
       },
       {
-        user:"tom",
+        name:"tom",
         message:"how's it going?",
         response:"a response from tom",
         showDetails: false
       },
       {
-        user:"jarid",
+        name:"jarid",
         message:"what's going on?",
         response:"a response from jarid",
         showDetails: false
@@ -43,8 +43,8 @@ chatApp.directive("usersList", function(){
         scope: false,
         template: "<h4>Select a user</h4>"+
             "<ol class='list-unstyled animated fadeInDown'>"+
-              "<li ng-repeat='message in messages'>"+
-                "<a class='users' ng-click='toggleDetails(message)'>{{message.user | uppercase}}</a>"+
+              "<li ng-repeat='message in users'>"+
+                "<a class='users' ng-click='toggleDetails(message)'>{{message.name | uppercase}}</a>"+
               "</li>"+
             "</ol>"
         ,
@@ -73,10 +73,11 @@ chatApp.directive("messagesList", function(){
                 "<span class='glyphicon glyphicon-comment'></span> Chat</div>"+
                 "<div class='panel-body body-panel'>"+
                   "<ol class='list-unstyled'>"+
-                    "<li ng-repeat='message in messages | filter:{showDetails:true}' class='animated fadeInUp'>"+
-                        "<p>{{message.user | uppercase}}: {{message.message}}</p>"+
+                    "<li ng-repeat='message in users | filter:{showDetails:true}' class='animated fadeInUp'>"+
+                        "<p>{{message.name | uppercase}}: {{message.message}}</p>"+
                         "<p>Matt: {{response}}</p>"+
-                        "<span ng-repeat='message in messages | filter:{showDetails:true}'>{{message.user | uppercase}}:</span>{{autoresponse}}"+
+                        "<span ng-repeat='message in users | filter:{showDetails:true}'>{{message.name | uppercase}}:</span>{{autoresponse}}"+
+                        "<br />"+
                     "</li>"+
                   "</ol>"+
                 "</div>"+
