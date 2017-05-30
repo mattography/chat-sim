@@ -31,6 +31,7 @@ chatApp.controller("chatController",function($scope, $timeout, $firebaseArray){
       $scope.response = [];
       $scope.sendMessage = function(){
           $scope.response.push($scope.chat);
+          mixpanel.track('Message', {'message': document.getElementById("search-term").value});
           $timeout(function () {
             $scope.autoresponse = "This is a great app!";
           }, 2000);
@@ -77,13 +78,12 @@ chatApp.directive("messagesList", function(){
                         "<p>{{message.name | uppercase}}: {{message.message}}</p>"+
                         "<p>Matt: {{response}}</p>"+
                         "<span ng-repeat='message in users | filter:{showDetails:true}'>{{message.name | uppercase}}:</span>{{autoresponse}}"+
-                        "<br />"+
                     "</li>"+
                   "</ol>"+
                 "</div>"+
                 "<div class='panel-footer clearfix'>"+
                   "<form name='form'>"+
-                    "<input type='text' ng-disabled='!userSelected' name='message' ng-model='chat' class='form-control' />"+
+                    "<input type='text' id='search-term' ng-disabled='!userSelected' name='message' ng-model='chat' class='form-control' />"+
                     "<span class='col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-xs-12' style='margin-top: 10px'>"+
                         "<button class='btn btn-warning btn-lg btn-block' id='btn-chat' ng-click='sendMessage(messages)' ng-disabled='!form.message.$dirty'>Send</button>"+
                     "</span>"+
